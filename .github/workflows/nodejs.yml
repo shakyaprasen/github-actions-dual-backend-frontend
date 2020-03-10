@@ -24,16 +24,23 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: |
-        cd ./app
-        npm i
-        npm run build --if-present
+    - uses: bahmutov/npm-install@v1
+      with:
+        working-directory: app
+    - uses: bahmutov/npm-install@v1
+      with:
+        working-directory: server
+    - name: Front End build
+      run: |
+        yarn install
+        yarn build
         rsync -avzP build/ ../server/public
-    - run: echo 'Front End Build finished'
-    - run: |
-        cd ./server
-        npm i
-        npm run build --if-present
-    - run: echo 'Back End Build finished'
+      working-directory: app
+    - name: Back End build
+      run: |
+        yarn install
+        yarn build
+      working-directory: server
+    - run: echo "Build proccess successful"
 
     #Deployment Code here
