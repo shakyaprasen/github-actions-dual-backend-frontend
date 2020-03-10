@@ -26,10 +26,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - uses: bahmutov/npm-install@v1
       with:
-        working-directory: app
-    - uses: bahmutov/npm-install@v1
-      with:
-        working-directory: server
+        working-directory: |
+          app
+          server
     - name: Front End build
       run: |
         yarn install
