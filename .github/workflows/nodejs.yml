@@ -24,17 +24,19 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - run: cd ./app
     - uses: borales/actions-yarn@v2.0.0
       with:
-        cmd: |
-          cd ./app
-          install
-          build
-          rsync -avzP build/ ../server/public
+        cmd: install
     - uses: borales/actions-yarn@v2.0.0
       with:
-        cmd: |
-          cd ./server
-          install
-          build
+        cmd: build
+    - run: rsync -avzP build/ ../server/public
+    - run: cd ../server
+    - uses: borales/actions-yarn@v2.0.0
+      with:
+        cmd: install
+    - uses: borales/actions-yarn@v2.0.0
+      with:
+        cmd: build
     - run: echo 'Build finished'
