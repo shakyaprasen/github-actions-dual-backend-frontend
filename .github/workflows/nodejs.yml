@@ -28,6 +28,7 @@ jobs:
     - uses: borales/actions-yarn@v2.0.0
       with:
         cmd: install
+    - run: cd ./app
     - uses: borales/actions-yarn@v2.0.0
       with:
         cmd: build
